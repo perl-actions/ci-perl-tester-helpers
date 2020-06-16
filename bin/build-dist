@@ -2,4 +2,5 @@
 
 set -eux
 
-dzil build --no-tgz --in perl-helpers-build
+BUILD_DIR=${BUILD_DIR:='build_dir'}
+dzil build --no-tgz --in "$BUILD_DIR"
