@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -eux
+
+if [[ -e dist.ini ]];then
+    dzil authordeps | xargs cpm install -g --show-build-log-on-failure
+    dzil stale | grep -v Dist::Zilla::Plugin::OALDERS::TidyAll | xargs cpm install -g --show-build-log-on-failure
+fi

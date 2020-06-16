@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -eux
+
+if [[ -z "${HARNESS_PERL_SWITCHES}" ]]; then
+    HARNESS_PERL_SWITCHES="-MDevel::Cover=+ignore,^local/|^t/|^xt"
+fi
+
+if [[ -n "${CODECOV_TOKEN}" ]]; then
+    cpm install -g --show-build-log-on-failure Devel::Cover::Report::Codecov
+fi
+
+prove -lr --jobs 2 t xt
+
+if [[ -n "${CODECOV_TOKEN}" ]]; then
+    cover -report codecov
+fi
