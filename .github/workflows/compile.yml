@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+  schedule:
+    - cron: "15 4 * * 0" # Every Sunday morning
+
+name: bash
+
+jobs:
+  shellcheck:
+    name: Test Bash Scripts
+    runs-on: ubuntu-latest
+    container:
+      image: perldocker/perl-tester:5.30 # we need prove
+    steps:
+      - uses: actions/checkout@master
+      - name: install Bats
+        run: >
+          cd /tmp &&
+          git clone https://github.com/bats-core/bats-core.git &&
+          cd bats-core &&
+          ./install.sh /usr/local
+      - name: Running tests
+        run: bats -t dzil_module/tests.bats

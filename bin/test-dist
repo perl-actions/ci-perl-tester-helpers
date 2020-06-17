@@ -22,3 +22,5 @@ prove -lr --jobs 2 "${ALL_TEST_DIRS[@]}"
 if [[ -n "${CODECOV_TOKEN}" ]]; then
     cover -report codecov
 fi
+
+exit 0
