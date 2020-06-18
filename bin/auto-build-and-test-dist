@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -eux
+
+build-dist
+cpan-install-build-deps
+cpan-install-dist-deps
+test-dist
