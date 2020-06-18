@@ -21,7 +21,7 @@ jobs:
       - name: install Bats
         run: >
           cd /tmp &&
-          git clone https://github.com/bats-core/bats-core.git &&
+          git clone https://github.com/bats-core/bats-core.git --depth 1 &&
           cd bats-core &&
           ./install.sh /usr/local
       - name: Running tests
