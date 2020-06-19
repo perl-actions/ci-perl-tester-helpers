@@ -2,7 +2,12 @@
 
 set -eux
 
-build-dist
+BUILD_DIR=${BUILD_DIR:='build_dir'}
+
 cpan-install-build-deps
+build-dist
+
+cd $BUILD_DIR
+
 cpan-install-dist-deps
 test-dist
