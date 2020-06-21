@@ -3,9 +3,18 @@
 set -eux
 
 AUTHOR_TESTING=${AUTHOR_TESTING:=0}
+CIRCLE_BRANCH=${CIRCLE_BRANCH:=""}
 CODECOV_TOKEN=${CODECOV_TOKEN:=""}
+GITHUB_REF=${GITHUB_REF:=""}
 HARNESS_PERL_SWITCHES=${HARNESS_PERL_SWITCHES:="-MDevel::Cover=+ignore,^local/|^t/|^xt"}
 TEST_DIRS=${TEST_DIRS:=t}
+
+# remove the changes test if we're testing master
+if [[ "$GITHUB_REF" == "refs/heads/master" ]] || [[ "$CIRCLE_BRANCH" == "master" ]]
+then
+    rm xt/release/changes_has_content.t || true
+    perl -pi -e "s|'xt/release/changes_has_content.t'||g" xt/author/* || true
+fi
 
 if [[ -n "${CODECOV_TOKEN}" ]]; then
     cpm install -g --show-build-log-on-failure Devel::Cover::Report::Codecov
