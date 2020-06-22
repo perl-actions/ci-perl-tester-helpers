@@ -3,6 +3,18 @@
 set -eux
 
 BUILD_DIR=${BUILD_DIR:='build_dir'}
-dzil build --no-tgz --in "$BUILD_DIR"
+
+if [[ -e dist.ini ]]; then
+    dzil build --no-tgz --in "$BUILD_DIR"
+elif [[ -e minil.toml ]]; then
+    rm -rf "$BUILD_DIR"
+    minil build
+
+    # TODO: It looks like minil doesn't accept a build directory name, so we
+    # just find the last created dir and use that.
+    # shellcheck disable=SC2012
+    DIR=$(ls -td -- */ | head -n 1 | cut -d'/' -f1)
+    mv "$DIR" build_dir
+fi
 
 exit 0

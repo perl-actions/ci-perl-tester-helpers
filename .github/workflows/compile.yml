@@ -25,4 +25,4 @@ jobs:
           cd bats-core &&
           ./install.sh /usr/local
       - name: Running tests
-        run: bats -t t/dzil_module.bats
+        run: bats -t t/dzil_module.bats t/minil_module.bats

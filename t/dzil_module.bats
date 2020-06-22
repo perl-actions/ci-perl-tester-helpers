@@ -6,27 +6,27 @@ setup() {
   cd t/test-data/dzil_module
 }
 
-@test "cpan-install-build-deps" {
+@test "dzil cpan-install-build-deps" {
   run cpan-install-build-deps
   [ "$status" -eq 0 ]
 }
 
-@test "cpan-install-dist-deps" {
+@test "dzil cpan-install-dist-deps" {
   run cpan-install-dist-deps
   [ "$status" -eq 0 ]
 }
 
-@test "build-dist" {
+@test "dzil build-dist" {
   run rm -rf build_dir && build-dist
   [ "$status" -eq 0 ]
 }
 
-@test "test-dist" {
+@test "dzil test-dist" {
   run cd build_dir && test-dist
   [ "$status" -eq 0 ]
 }
 
-@test "auto-build-and-test-dist" {
+@test "dzil auto-build-and-test-dist" {
   run rm -rf build_dir && bash auto-build-and-test-dist && rm -rf build_dir
   [ "$status" -eq 0 ]
 }
