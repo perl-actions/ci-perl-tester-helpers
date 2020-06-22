@@ -18,10 +18,6 @@ then
     perl -pi -e "s|'xt/release/changes_has_content.t'||g" xt/author/* || true
 fi
 
-if [[ -n "${CODECOV_TOKEN}" ]]; then
-    cpm install -g --show-build-log-on-failure Devel::Cover::Report::Codecov
-fi
-
 if [ "$AUTHOR_TESTING" -ne 0 ] && [ -d xt ]; then
     TEST_DIRS="$TEST_DIRS xt"
 fi
