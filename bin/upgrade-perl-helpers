@@ -2,7 +2,7 @@
 
 set -eux
 
-REPO=github-perl-helpers
+REPO=ci-perl-helpers
 
 pushd /tmp
 rm -rf $REPO
