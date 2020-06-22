@@ -15,8 +15,7 @@ if [[ -n $CODECOV_TOKEN || -n $CODE_COVERAGE_REPORT ]]; then
 fi
 
 # remove the changes test if we're testing master
-if [[ "$GITHUB_REF" == "refs/heads/master" ]] || [[ "$CIRCLE_BRANCH" == "master" ]]
-then
+if [[ "$GITHUB_REF" == "refs/heads/master" ]] || [[ "$CIRCLE_BRANCH" == "master" ]]; then
     rm -f xt/release/changes_has_content.t || true
     perl -pi -e "s|'xt/release/changes_has_content.t'||g" xt/author/* || true
 fi
@@ -25,7 +24,7 @@ if [ "$AUTHOR_TESTING" -ne 0 ] && [ -d xt ]; then
     TEST_DIRS="$TEST_DIRS xt"
 fi
 
-IFS=' ' read -r -a ALL_TEST_DIRS <<< "$TEST_DIRS"
+IFS=' ' read -r -a ALL_TEST_DIRS <<<"$TEST_DIRS"
 
 prove -lr --jobs 2 "${ALL_TEST_DIRS[@]}"
 
