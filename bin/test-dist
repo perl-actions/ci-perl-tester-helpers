@@ -9,6 +9,8 @@ GITHUB_REF=${GITHUB_REF:=""}
 HARNESS_PERL_SWITCHES=${HARNESS_PERL_SWITCHES:="-MDevel::Cover=+ignore,^local/|^t/|^xt"}
 TEST_DIRS=${TEST_DIRS:=t}
 
+export HARNESS_PERL_SWITCHES
+
 # remove the changes test if we're testing master
 if [[ "$GITHUB_REF" == "refs/heads/master" ]] || [[ "$CIRCLE_BRANCH" == "master" ]]
 then
