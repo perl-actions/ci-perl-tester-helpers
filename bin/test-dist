@@ -4,12 +4,15 @@ set -eux
 
 AUTHOR_TESTING=${AUTHOR_TESTING:=0}
 CIRCLE_BRANCH=${CIRCLE_BRANCH:=""}
+CODE_COVERAGE_REPORT=${CODE_COVERAGE_REPORT:=""}
 CODECOV_TOKEN=${CODECOV_TOKEN:=""}
 GITHUB_REF=${GITHUB_REF:=""}
-HARNESS_PERL_SWITCHES=${HARNESS_PERL_SWITCHES:="-MDevel::Cover=+ignore,^local/|^t/|^xt"}
 TEST_DIRS=${TEST_DIRS:=t}
 
-export HARNESS_PERL_SWITCHES
+if [[ -n $CODECOV_TOKEN || -n $CODE_COVERAGE_REPORT ]]; then
+    HARNESS_PERL_SWITCHES=${HARNESS_PERL_SWITCHES:="-MDevel::Cover=+ignore,^local/|^t/|^xt"}
+    export HARNESS_PERL_SWITCHES
+fi
 
 # remove the changes test if we're testing master
 if [[ "$GITHUB_REF" == "refs/heads/master" ]] || [[ "$CIRCLE_BRANCH" == "master" ]]
