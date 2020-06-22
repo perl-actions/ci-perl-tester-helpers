@@ -32,6 +32,10 @@ export BUILD_DIR
 }
 
 @test "minil auto-build-and-test-dist" {
+  GITHUB_ACTIONS=${GITHUB_ACTIONS:=''}
+  if [[ $GITHUB_ACTIONS=true ]]; then
+    skip "Tricky to test under CI"
+  fi
   rm -rf $BUILD_DIR
   cd "$DIST_DIR"
   run bash "$BIN_DIR"/auto-build-and-test-dist

@@ -24,5 +24,11 @@ jobs:
           git clone https://github.com/bats-core/bats-core.git --depth 1 &&
           cd bats-core &&
           ./install.sh /usr/local
+      - name: Install Minilla
+        run: cpm install -g Minilla
+      - name: Configure git
+        run: >
+          git config --global user.email "foo@example.com" &&
+          git config --global user.name "Min Illa"
       - name: Running tests
         run: bats -t t/dzil_module.bats t/minil_module.bats
