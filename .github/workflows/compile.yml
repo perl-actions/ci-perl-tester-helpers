@@ -30,5 +30,10 @@ jobs:
         run: >
           git config --global user.email "foo@example.com" &&
           git config --global user.name "Min Illa"
-      - name: Running tests
-        run: bats -t t/dzil_module.bats t/minil_module.bats
+      - name: minil tests
+        run: bats -t t/minil_module.bats
+      - name: dzil tests
+        run: bats -t t/dzil_module.bats
+        env:
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+          COVERALLS_TOKEN: ${{secrets.COVERALLS_TOKEN}}
