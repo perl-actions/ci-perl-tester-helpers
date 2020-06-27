@@ -11,6 +11,7 @@
   * [`test-dist`](#test-dist)
   * [`upgrade-perl-helpers`](#upgrade-perl-helpers)
 * [Environment Variables](#environment-variables)
+* [Linting](#linting)
 
 <!-- vim-markdown-toc -->
 
@@ -40,3 +41,7 @@ curl https://raw.githubusercontent.com/oalders/ci-perl-helpers/master/bin/upgrad
 * `CODECOV_TOKEN`
 * `COVERALLS_TOKEN`
 * `HARNESS_PERL_SWITCHES`
+
+# Linting
+
+You can lint this project locally via `precious lint --all`
