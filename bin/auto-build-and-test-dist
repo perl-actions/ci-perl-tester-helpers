@@ -4,10 +4,10 @@ set -eux
 
 BUILD_DIR=${BUILD_DIR:='build_dir'}
 
-cpan-install-build-deps --with-develop
+cpan-install-build-deps
 build-dist
 
 cd $BUILD_DIR
 
-cpan-install-dist-deps
+cpan-install-dist-deps --with-develop
 test-dist
