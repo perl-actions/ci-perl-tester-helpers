@@ -18,7 +18,7 @@
 # Upgrade or Install via curl
 
 ```bash
-curl https://raw.githubusercontent.com/oalders/ci-perl-helpers/master/bin/upgrade-perl-helpers | bash
+curl https://raw.githubusercontent.com/perl-actions/ci-perl-tester-helpers/master/bin/upgrade-perl-helpers | bash
 ```
 
 # Binaries

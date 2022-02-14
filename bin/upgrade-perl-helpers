@@ -2,11 +2,11 @@
 
 set -eux
 
-REPO=ci-perl-helpers
+REPO=ci-perl-tester-helpers
 
 pushd /tmp
 rm -rf $REPO
-git clone "https://github.com/oalders/$REPO.git" --depth 1
+git clone "https://github.com/perl-actions/$REPO.git" --depth 1
 cp $REPO/bin/* /usr/local/bin/
 rm -rf $REPO
 popd
