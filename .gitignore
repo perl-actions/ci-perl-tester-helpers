@@ -1,1 +1,6 @@
 /t/test-data/dzil_module/build_dir
+/t/test-data/module-build_module/_build
+/t/test-data/module-build_module/build_dir
+/t/test-data/module-build_module/MANIFEST*
+/t/test-data/module-build_module/Build
+
