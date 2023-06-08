@@ -30,21 +30,8 @@ jobs:
         run: >
           git config --global user.email "foo@example.com" &&
           git config --global user.name "Min Illa"
-      - name: minil tests
-        run: bats -t t/minil_module.bats
-      - name: dzil tests
-        run: bats -t t/dzil_module.bats
+      - name: bats tests
+        run: bats -v && bats t
         env:
           CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
           COVERALLS_TOKEN: ${{secrets.COVERALLS_TOKEN}}
-
-      - name: Build.PL test
-        run: bats -t t/module_build_module.bats
-
-#      - name: ExtUtils with MANIFEST test
-#        run: bats -t t/extutils-makemaker-module-with-manifest.bats
-
-      - name: ExtUtils with MANIFEST.SKIP test
-        run: bats -t t/extutils-makemaker-module-with-manifest.skip.bats
-
-
