@@ -30,6 +30,8 @@ jobs:
         run: >
           git config --global user.email "foo@example.com" &&
           git config --global user.name "Min Illa"
+      - name: copy bin files
+        run: cp bin/* /usr/local/bin/
       - name: bats tests
         run: bats -v && bats t
         env:
