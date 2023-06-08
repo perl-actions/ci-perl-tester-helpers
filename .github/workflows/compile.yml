@@ -41,10 +41,10 @@ jobs:
       - name: Build.PL test
         run: bats -t t/module_build_module.bats
 
-      - name: ExtUtils with MANIFEST test
-        run: bats -t t/extutils-makemaker-module-with-manifest.bats
+#      - name: ExtUtils with MANIFEST test
+#        run: bats -t t/extutils-makemaker-module-with-manifest.bats
 
-#      - name: ExtUtils with MANIFEST.SKIP test
-#        run: bats -t t/extutils-makemaker-module-with-manifest.skip.bats
+      - name: ExtUtils with MANIFEST.SKIP test
+        run: bats -t t/extutils-makemaker-module-with-manifest.skip.bats
 
 
