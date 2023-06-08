@@ -10,6 +10,9 @@
 /t/test-data/extutils-makemaker-module-with-manifest.skip/Makefile
 /t/test-data/extutils-makemaker-module-with-manifest.skip/blib/
 /t/test-data/extutils-makemaker-module-with-manifest.skip/pm_to_blib
+/t/test-data/extutils-makemaker-module-with-manifest.skip/MANIFEST.bak
+/t/test-data/extutils-makemaker-module-with-manifest.skip/build_dir/
+/t/test-data/extutils-makemaker-module-with-manifest.skip/cover_db/
 
 
 /t/test-data/extutils-makemaker-module-with-manifest/Acme-Helpers-*
@@ -17,4 +20,7 @@
 /t/test-data/extutils-makemaker-module-with-manifest/Makefile
 /t/test-data/extutils-makemaker-module-with-manifest/blib/
 /t/test-data/extutils-makemaker-module-with-manifest/pm_to_blib
+/t/test-data/extutils-makemaker-module-with-manifest/MANIFEST.bak
+/t/test-data/extutils-makemaker-module-with-manifest/build_dir/
+/t/test-data/extutils-makemaker-module-with-manifest/cover_db/
 
