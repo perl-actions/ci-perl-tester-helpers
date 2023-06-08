@@ -25,6 +25,19 @@ elif [[ -e Build.PL ]]; then
     # Module::Build does not support a build directory, so we have to find
     # the last created dir and use that.
     DIR="$(perl -MModule::Build -e'print Module::Build->resume->dist_dir;')"
+    mv "$DIR" $BUILD_DIR
+elif [[ -e Makefile.PL ]]; then
+    rm -rf "$BUILD_DIR"
+    perl Makefile.PL
+    make
+    make test
+    if [[ -e MANIFEST.SKIP ]]; then
+        make manifest
+    fi
+    make distdir
+
+    # same as with minil
+    DIR=$(ls -td -- */ | head -n 1 | cut -d'/' -f1)
     mv "$DIR" "$BUILD_DIR"
 fi
 
