@@ -1,12 +1,11 @@
+---
 on:
   push:
     branches:
-      - "*"
+      - 'master'
   pull_request:
     branches:
-      - "*"
-  schedule:
-    - cron: "15 4 * * 0" # Every Sunday morning
+      - '*'
   workflow_dispatch:
 
 name: bash
@@ -16,9 +15,9 @@ jobs:
     name: Test Bash Scripts
     runs-on: ubuntu-latest
     container:
-      image: perldocker/perl-tester:5.30 # we need prove
+      image: perldocker/perl-tester:5.36  # we need prove
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v3
       - name: install Bats
         run: >
           cd /tmp &&
