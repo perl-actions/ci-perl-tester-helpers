@@ -4,7 +4,6 @@ PATH="$PATH:../../../bin"
 
 setup() {
   echo "setup"
-  printenv | sort
   cd t/test-data/extutils-makemaker-module-with-manifest
 }
 
@@ -20,6 +19,7 @@ setup() {
 
 @test "Makefile.PL test-dist" {
   run cd build_dir && test-dist
+  echo "status: $status"
   [ "$status" -eq 0 ]
 }
 
