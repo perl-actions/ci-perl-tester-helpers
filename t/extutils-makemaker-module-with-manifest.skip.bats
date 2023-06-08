@@ -3,7 +3,7 @@
 PATH="$PATH:../../../bin"
 
 setup() {
-  cd t/test-data/extutils-makemaker-module-with-manifest.skip.bats
+  cd t/test-data/extutils-makemaker-module-with-manifest.skip
 }
 
 @test "Makefile.PL cpan-install-dist-deps" {

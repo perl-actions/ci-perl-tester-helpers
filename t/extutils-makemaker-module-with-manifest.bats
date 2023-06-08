@@ -4,7 +4,7 @@ PATH="$PATH:../../../bin"
 
 setup() {
   echo "setup"
-  cd t/test-data/extutils-makemaker-module-with-manifest.bats
+  cd t/test-data/extutils-makemaker-module-with-manifest
 }
 
 @test "Makefile.PL cpan-install-dist-deps" {
