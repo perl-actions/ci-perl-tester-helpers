@@ -14,7 +14,7 @@ elif [[ -e minil.toml ]]; then
     # just find the last created dir and use that.
     # shellcheck disable=SC2012
     DIR=$(ls -td -- */ | head -n 1 | cut -d'/' -f1)
-    mv "$DIR" build_dir
+    mv "$DIR" "$BUILD_DIR"
 elif [[ -e Build.PL ]]; then
     rm -rf "$BUILD_DIR"
     perl Build.PL
