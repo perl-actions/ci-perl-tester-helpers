@@ -4,6 +4,7 @@ PATH="$PATH:../../../bin"
 
 setup() {
   echo "setup"
+  printenv | sort
   cd t/test-data/extutils-makemaker-module-with-manifest
 }
 
