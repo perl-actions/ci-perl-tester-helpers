@@ -3,6 +3,7 @@
 PATH="$PATH:../../../bin"
 
 setup() {
+  echo "setup"
   cd t/test-data/extutils-makemaker-module-with-manifest.bats
 }
 
