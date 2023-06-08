@@ -37,6 +37,7 @@ elif [[ -e Makefile.PL ]]; then
     make distdir
 
     # same as with minil
+    # shellcheck disable=SC2012
     DIR=$(ls -td -- */ | head -n 1 | cut -d'/' -f1)
     mv "$DIR" "$BUILD_DIR"
 fi
