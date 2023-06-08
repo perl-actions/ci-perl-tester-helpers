@@ -11,3 +11,10 @@
 /t/test-data/extutils-makemaker-module-with-manifest.skip/blib/
 /t/test-data/extutils-makemaker-module-with-manifest.skip/pm_to_blib
 
+
+/t/test-data/extutils-makemaker-module-with-manifest/Acme-Helpers-*
+/t/test-data/extutils-makemaker-module-with-manifest/MYMETA.*
+/t/test-data/extutils-makemaker-module-with-manifest/Makefile
+/t/test-data/extutils-makemaker-module-with-manifest/blib/
+/t/test-data/extutils-makemaker-module-with-manifest/pm_to_blib
+
