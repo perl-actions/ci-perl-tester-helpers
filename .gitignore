@@ -4,3 +4,23 @@
 /t/test-data/module-build_module/MANIFEST*
 /t/test-data/module-build_module/Build
 
+/t/test-data/extutils-makemaker-module-with-manifest.skip/Acme-Helpers-*
+/t/test-data/extutils-makemaker-module-with-manifest.skip/MANIFEST
+/t/test-data/extutils-makemaker-module-with-manifest.skip/MYMETA.*
+/t/test-data/extutils-makemaker-module-with-manifest.skip/Makefile
+/t/test-data/extutils-makemaker-module-with-manifest.skip/blib/
+/t/test-data/extutils-makemaker-module-with-manifest.skip/pm_to_blib
+/t/test-data/extutils-makemaker-module-with-manifest.skip/MANIFEST.bak
+/t/test-data/extutils-makemaker-module-with-manifest.skip/build_dir/
+/t/test-data/extutils-makemaker-module-with-manifest.skip/cover_db/
+
+
+/t/test-data/extutils-makemaker-module-with-manifest/Acme-Helpers-*
+/t/test-data/extutils-makemaker-module-with-manifest/MYMETA.*
+/t/test-data/extutils-makemaker-module-with-manifest/Makefile
+/t/test-data/extutils-makemaker-module-with-manifest/blib/
+/t/test-data/extutils-makemaker-module-with-manifest/pm_to_blib
+/t/test-data/extutils-makemaker-module-with-manifest/MANIFEST.bak
+/t/test-data/extutils-makemaker-module-with-manifest/build_dir/
+/t/test-data/extutils-makemaker-module-with-manifest/cover_db/
+
