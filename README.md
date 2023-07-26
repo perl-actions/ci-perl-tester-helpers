@@ -25,13 +25,37 @@ curl https://raw.githubusercontent.com/perl-actions/ci-perl-tester-helpers/maste
 
 ## `auto-build-and-test-dist`
 
+Any argument is forwarded to `test-dist` (which forwards it to `prove`)
+
+Examples:
+```
+auto-build-and-test-dist --state save
+auto-build-and-test-dist --jobs $(nproc --all)
+auto-build-and-test-dist --verbose
+```
+
 ## `build-dist`
+
+Builds your distribution.
+
+- `Dist::Zilla`
+
+`build-dist` recognizes it though it favours `Build.PL` / `Makefile.PL` coming from
+repository. It also installs necessary plugins automagically.
+
+Beware that `Dist::Zilla` at time of writing this requires Perl v5.20 so if you
+want to support older versions of Perls you should include your builder script
+into repository.
 
 ## `cpan-install-build-deps`
 
 ## `cpan-install-dist-deps`
 
 ## `test-dist`
+
+Any argument is passed to `prove`
+
+By default `prove` is executed with `--jobs 2`
 
 ## `upgrade-perl-helpers`
 
