@@ -28,7 +28,7 @@ fi
 
 IFS=' ' read -r -a ALL_TEST_DIRS <<<"$TEST_DIRS"
 
-prove -lr --jobs 2 "${ALL_TEST_DIRS[@]}"
+prove -lr --jobs 2 "$@" "${ALL_TEST_DIRS[@]}"
 
 if [[ -n "${CODECOV_ENABLE}" ]]; then
     cover -report codecov
