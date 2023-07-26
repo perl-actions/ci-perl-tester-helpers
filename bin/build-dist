@@ -4,9 +4,7 @@ set -eux
 
 BUILD_DIR=${BUILD_DIR:='build_dir'}
 
-if [[ -e dist.ini ]]; then
-    dzil build --no-tgz --in "$BUILD_DIR"
-elif [[ -e minil.toml ]]; then
+if [[ -e minil.toml ]]; then
     rm -rf "$BUILD_DIR"
     minil build
 
@@ -39,6 +37,8 @@ elif [[ -e Makefile.PL ]]; then
     # shellcheck disable=SC2012
     DIR=$(ls -td -- */ | head -n 1 | cut -d'/' -f1)
     mv "$DIR" "$BUILD_DIR"
+elif [ -e dist.ini  ]; then
+    dzil build --no-tgz --in "$BUILD_DIR"
 fi
 
 exit 0
