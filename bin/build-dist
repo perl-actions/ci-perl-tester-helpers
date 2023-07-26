@@ -38,6 +38,7 @@ elif [[ -e Makefile.PL ]]; then
     DIR=$(ls -td -- */ | head -n 1 | cut -d'/' -f1)
     mv "$DIR" "$BUILD_DIR"
 elif [ -e dist.ini  ]; then
+	dzil authordeps --missing | cpm install -
     dzil build --no-tgz --in "$BUILD_DIR"
 fi
 
