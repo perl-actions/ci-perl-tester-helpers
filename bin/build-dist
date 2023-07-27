@@ -2,30 +2,86 @@
 
 set -eux
 
+PREFER_AUTHORING=${PREFER_AUTHORING:='1'}
 BUILD_DIR=${BUILD_DIR:='build_dir'}
+INSTALL_DIR=
 
-if [[ -e minil.toml ]]; then
-    rm -rf "$BUILD_DIR"
+case "$1" in
+	--favour-authoring | --prefer-authoring | --authoring)
+		PREFER_AUTHORING="1"
+		;;
+	--disfavour-authoring | --prefer-builder | --builder )
+		PREFER_AUTHORING="0"
+		;;
+esac
+
+function error () {
+	echo >&2 "$@"
+	return 1
+}
+
+function last-modified-dir () {
+    ls -td -- */ | head -n 1 | cut -d'/' -f1
+}
+
+function module-build-install-dir () {
+	perl -MModule::Build -e'print Module::Build->resume->dist_dir;'
+}
+
+function authoring-tool-favoured () {
+	case "$FAVOUR_AUTHORING" in
+		0 | false) return 0 ;;
+		1 | true ) return 1 ;;
+		*)
+			error "Unknown value of FAVOUR_AUTHORING - '$FAVOUR_AUTHORING'"
+			;;
+	esac
+}
+
+function build-with-dist-zilla () {
+	[ -e dist.ini ] || return 1
+	[ dzil -v >/dev/null 2>&1 ] || return 1
+
+	dzil authordeps --missing | cpm install -
+	dzil build --no-tgz --in "$BUILD_DIR"
+}
+
+function build-with-minilla () {
+	[ -e minil.toml ] || return 1
+	[ minil -v >/dev/null 2>&1 ] || return 1
+
     minil build
 
     # TODO: It looks like minil doesn't accept a build directory name, so we
     # just find the last created dir and use that.
     # shellcheck disable=SC2012
-    DIR=$(ls -td -- */ | head -n 1 | cut -d'/' -f1)
-    mv "$DIR" "$BUILD_DIR"
-elif [[ -e Build.PL ]]; then
-    rm -rf "$BUILD_DIR"
+    INSTALL_DIR=$(last-modified-dir)
+}
+
+function build-with-authoring-tool () {
+	# false used as diff-friendly syntax sugar
+	false                           \
+		|| build-with-dist-zilla    \
+		|| build-with-minilla       \
+		|| false
+}
+
+function build-with-authoring-tool-favoured () {
+	authoring-tool-favoured && build-with-authoring-tool
+}
+
+function build-with-build-pl () {
     perl Build.PL
     ./Build clean
     ./Build manifest
     ./Build distdir
 
-    # Module::Build does not support a build directory, so we have to find
-    # the last created dir and use that.
-    DIR="$(perl -MModule::Build -e'print Module::Build->resume->dist_dir;')"
-    mv "$DIR" "$BUILD_DIR"
-elif [[ -e Makefile.PL ]]; then
-    rm -rf "$BUILD_DIR"
+    # Module::Build does not support a build directory, so we have to find it
+	# Module::Build::Tiny doesn't support `resume` so fallback to last modified
+    INSTALL_DIR="$( module-build-install-dir || last-modified-dir )"
+}
+
+function build-with-makefile-pl () {
     perl Makefile.PL
     make
     if [[ -e MANIFEST.SKIP ]]; then
@@ -35,11 +91,31 @@ elif [[ -e Makefile.PL ]]; then
 
     # same as with minil
     # shellcheck disable=SC2012
-    DIR=$(ls -td -- */ | head -n 1 | cut -d'/' -f1)
-    mv "$DIR" "$BUILD_DIR"
-elif [ -e dist.ini  ]; then
-	dzil authordeps --missing | cpm install -
-    dzil build --no-tgz --in "$BUILD_DIR"
-fi
+    INSTALL_DIR=$(last-modified-dir)
+}
+
+function unknown-build-method () {
+	error <<EOF
+Don't know how to build your distro.
+Supported builder methods
+- authoring tools
+  - Dist::Zilla
+  - Minilla
+- Build.PL
+- Makefile.PL
+EOF
+}
+
+rm -rf "$BUILD_DIR"
+
+# false used as diff-friendly syntax sugar
+false                                       \
+	|| build-with-authoring-tool-favoured   \
+	|| build-with-build-pl                  \
+	|| build-with-makefile-pl               \
+	|| build-with-authoring-tool            \
+	|| unknown-builder
+
+[ -n "$INSTALL_DIR" ] && mv "$INSTALL_DIR" "$BUILD_DIR"
 
 exit 0

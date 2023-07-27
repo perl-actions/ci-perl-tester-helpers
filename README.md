@@ -47,6 +47,14 @@ Beware that `Dist::Zilla` at time of writing this requires Perl v5.20 so if you
 want to support older versions of Perls you should include your builder script
 into repository.
 
+- CI workflow hint
+
+When your repository uses authoring tools and contains also generated
+Build.PL / Makefile.PL (good practice btw), you may want to test both
+approaches and create one job with env variable `FAVOUR_AUTHORING=true`
+(or option `--favour-authoring`) and another job with env variable
+`FAVOUR_AUTHORING=false` (or option `--disfavour-authoring`)
+
 ## `cpan-install-build-deps`
 
 ## `cpan-install-dist-deps`
