@@ -22,7 +22,9 @@ if [[ "$GITHUB_REF" == "refs/heads/master" ]] || [[ "$CIRCLE_BRANCH" == "master"
     perl -pi -e "s|'xt/release/changes_has_content.t'||g" xt/author/* || true
 fi
 
-if [ "$AUTHOR_TESTING" -ne 0 ] && [ -d xt ]; then
+if [[ $AUTHOR_TESTING -ne 0 ]] &&
+   [[ -d xt ]]
+then
     TEST_DIRS="$TEST_DIRS xt"
 fi
 
