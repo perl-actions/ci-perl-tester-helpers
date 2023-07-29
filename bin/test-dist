@@ -12,12 +12,12 @@ set -e -u -o pipefail
 : "${TEST_DIRS:=t}"
 
 if [[ -n $CODECOV_ENABLE || -n $COVERALLS_TOKEN || -n $CODE_COVERAGE_REPORT ]]; then
-    HARNESS_PERL_SWITCHES=${HARNESS_PERL_SWITCHES:="-MDevel::Cover=+ignore,^local/|^t/|^xt"}
+    : "${HARNESS_PERL_SWITCHES:="-MDevel::Cover=+ignore,^local/|^t/|^xt"}"
     export HARNESS_PERL_SWITCHES
 fi
 
 # remove the changes test if we're testing master
-if [[ "$GITHUB_REF" == "refs/heads/master" ]] || [[ "$CIRCLE_BRANCH" == "master" ]]; then
+if [[ $GITHUB_REF == refs/heads/master || $CIRCLE_BRANCH == master ]]; then
     rm -f xt/release/changes_has_content.t || true
     perl -pi -e "s|'xt/release/changes_has_content.t'||g" xt/author/* || true
 fi
@@ -32,11 +32,11 @@ IFS=' ' read -r -a ALL_TEST_DIRS <<<"$TEST_DIRS"
 
 prove -lr --jobs 2 "$@" "${ALL_TEST_DIRS[@]}"
 
-if [[ -n "${CODECOV_ENABLE}" ]]; then
+if [[ -n ${CODECOV_ENABLE} ]]; then
     cover -report codecov
 fi
 
-if [[ -n "${COVERALLS_TOKEN}" ]]; then
+if [[ -n ${COVERALLS_TOKEN} ]]; then
     COVERALLS_REPO_TOKEN=$COVERALLS_TOKEN
     export COVERALLS_REPO_TOKEN
     cover -report coveralls
