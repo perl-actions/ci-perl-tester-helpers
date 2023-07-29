@@ -4,10 +4,11 @@ set -e -u -o pipefail
 
 REPO=ci-perl-tester-helpers
 
-pushd /tmp
-rm -rf $REPO
-git clone --depth 1 \
-    "https://github.com/perl-actions/$REPO.git"
-cp $REPO/bin/* /usr/local/bin/
-rm -rf $REPO
-popd
+(
+    cd /tmp
+    rm -rf $REPO
+    git clone --depth 1 \
+        https://github.com/perl-actions/$REPO.git
+    cp $REPO/bin/* /usr/local/bin/
+    rm -rf $REPO
+)
