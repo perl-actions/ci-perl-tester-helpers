@@ -4,9 +4,19 @@ set -e -u -o pipefail
 
 : "${BUILD_DIR:=build_dir}"
 
-if [[ -e dist.ini ]]; then
+main() (
+    if [[ -e dist.ini ]]; then dzil-build
+    elif [[ -e minil.toml ]]; then minil-build
+    elif [[ -e Build.PL ]]; then build-pl
+    elif [[ -e Makefile.PL ]]; then std-perl-build
+    fi
+)
+
+dzil-build() (
     dzil build --no-tgz --in "$BUILD_DIR"
-elif [[ -e minil.toml ]]; then
+)
+
+minil-build() (
     rm -rf "$BUILD_DIR"
     minil build
 
@@ -19,8 +29,11 @@ elif [[ -e minil.toml ]]; then
             cut -d'/' -f1
     )
     mv "$DIR" "$BUILD_DIR"
-elif [[ -e Build.PL ]]; then
+)
+
+build-pl() (
     rm -rf "$BUILD_DIR"
+
     perl Build.PL
     ./Build clean
     ./Build manifest
@@ -28,9 +41,11 @@ elif [[ -e Build.PL ]]; then
 
     # Module::Build does not support a build directory, so we have to find
     # the last created dir and use that.
-    DIR=$(perl -MModule::Build -e'print Module::Build->resume->dist_dir;')
+    DIR=$(perl -MModule::Build -e 'print Module::Build->resume->dist_dir;')
     mv "$DIR" "$BUILD_DIR"
-elif [[ -e Makefile.PL ]]; then
+)
+
+std-perl-build() (
     rm -rf "$BUILD_DIR"
     perl Makefile.PL
     make
@@ -47,4 +62,6 @@ elif [[ -e Makefile.PL ]]; then
             cut -d'/' -f1
     )
     mv "$DIR" "$BUILD_DIR"
-fi
+)
+
+main "$@"

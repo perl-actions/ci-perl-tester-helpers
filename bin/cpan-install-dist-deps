@@ -2,16 +2,26 @@
 
 set -e -u -o pipefail
 
-if [[ -e cpanfile ]];then
+main() (
+  if [[ -e cpanfile ]];then
+      cpm-install "$@"
+  fi
+
+  if [[ -e Build.PL ]]; then
+      build-and-install-deps
+  fi
+)
+
+cpm-install() (
     cpm install -g \
         --cpanfile cpanfile \
         --with-recommends \
         --with-suggests \
         --show-build-log-on-failure \
         "$@"
-fi
+)
 
-if [[ -e Build.PL ]]; then
+build-and-install-deps() (
     # This will install both build and dist deps
     perl Build.PL
     PERL_MM_USE_DEFAULT=1 \
@@ -19,4 +29,6 @@ if [[ -e Build.PL ]]; then
             --cpan_client \
             'cpm install -g --show-build-log-on-failure' ||
         true
-fi
+)
+
+main "$@"
