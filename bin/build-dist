@@ -2,7 +2,7 @@
 
 set -e -u -o pipefail
 
-BUILD_DIR=${BUILD_DIR:='build_dir'}
+: "${BUILD_DIR:=build_dir}"
 
 if [[ -e dist.ini ]]; then
     dzil build --no-tgz --in "$BUILD_DIR"
