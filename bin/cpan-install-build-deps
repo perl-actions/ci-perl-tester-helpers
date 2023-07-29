@@ -11,5 +11,3 @@ if [[ -e dist.ini ]]; then
         xargs cpm install -g --show-build-log-on-failure ||
         true
 fi
-
-exit 0

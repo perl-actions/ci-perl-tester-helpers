@@ -48,5 +48,3 @@ elif [[ -e Makefile.PL ]]; then
     )
     mv "$DIR" "$BUILD_DIR"
 fi
-
-exit 0

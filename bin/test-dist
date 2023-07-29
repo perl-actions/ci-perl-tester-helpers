@@ -43,5 +43,3 @@ if [[ ${COVERALLS_TOKEN} ]]; then
     export COVERALLS_REPO_TOKEN
     cover -report coveralls
 fi
-
-exit 0
