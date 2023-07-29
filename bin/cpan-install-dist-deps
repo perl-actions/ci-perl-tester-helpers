@@ -3,13 +3,13 @@
 set -e -u -o pipefail
 
 main() (
-  [[ -e cpanfile ]] &&
-      cpm-install "$@"
+    [[ -e cpanfile ]] &&
+        cpm-install "$@"
 
-  [[ -e Build.PL ]] &&
-      build-and-install-deps
+    [[ -e Build.PL ]] &&
+        build-and-install-deps
 
-  true
+    true
 )
 
 cpm-install() (
