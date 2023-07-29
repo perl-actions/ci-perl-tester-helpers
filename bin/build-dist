@@ -49,9 +49,8 @@ std-perl-build() (
     rm -rf "$BUILD_DIR"
     perl Makefile.PL
     make
-    if [[ -e MANIFEST.SKIP ]]; then
+    [[ -e MANIFEST.SKIP ]] &&
         make manifest
-    fi
     make distdir
 
     # same as with minil
