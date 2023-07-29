@@ -13,16 +13,16 @@ set -e -u -o pipefail
 
 if [[ $CODECOV_ENABLE ||
       $COVERALLS_TOKEN ||
-      $CODE_COVERAGE_REPORT
-   ]]; then
+      $CODE_COVERAGE_REPORT ]]
+then
     : "${HARNESS_PERL_SWITCHES:="-MDevel::Cover=+ignore,^local/|^t/|^xt"}"
     export HARNESS_PERL_SWITCHES
 fi
 
 # remove the changes test if we're testing master
 if [[ $GITHUB_REF == refs/heads/master ||
-      $CIRCLE_BRANCH == master
-   ]]; then
+      $CIRCLE_BRANCH == master ]]
+then
     rm -f xt/release/changes_has_content.t || true
     perl -pi -e "s|'xt/release/changes_has_content.t'||g" \
         xt/author/* ||
