@@ -3,11 +3,20 @@
 set -e -u -o pipefail
 
 if [[ -e cpanfile ]];then
-    cpm install -g --cpanfile cpanfile --with-recommends --with-suggests --show-build-log-on-failure "$@"
+    cpm install -g \
+        --cpanfile cpanfile \
+        --with-recommends \
+        --with-suggests \
+        --show-build-log-on-failure \
+        "$@"
 fi
 
 if [[ -e Build.PL ]]; then
     # This will install both build and dist deps
     perl Build.PL
-    PERL_MM_USE_DEFAULT=1 ./Build installdeps --cpan_client 'cpm install -g --show-build-log-on-failure' || true
+    PERL_MM_USE_DEFAULT=1 \
+        ./Build installdeps \
+            --cpan_client \
+            'cpm install -g --show-build-log-on-failure' ||
+        true
 fi

@@ -19,7 +19,9 @@ fi
 # remove the changes test if we're testing master
 if [[ $GITHUB_REF == refs/heads/master || $CIRCLE_BRANCH == master ]]; then
     rm -f xt/release/changes_has_content.t || true
-    perl -pi -e "s|'xt/release/changes_has_content.t'||g" xt/author/* || true
+    perl -pi -e "s|'xt/release/changes_has_content.t'||g" \
+        xt/author/* ||
+        true
 fi
 
 if [[ $AUTHOR_TESTING -ne 0 ]] &&

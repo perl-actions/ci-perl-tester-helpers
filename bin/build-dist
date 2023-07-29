@@ -13,7 +13,11 @@ elif [[ -e minil.toml ]]; then
     # TODO: It looks like minil doesn't accept a build directory name, so we
     # just find the last created dir and use that.
     # shellcheck disable=SC2012
-    DIR=$(ls -td -- */ | head -n 1 | cut -d'/' -f1)
+    DIR=$(
+        ls -td -- */ |
+            head -n 1 |
+            cut -d'/' -f1
+    )
     mv "$DIR" "$BUILD_DIR"
 elif [[ -e Build.PL ]]; then
     rm -rf "$BUILD_DIR"
@@ -37,7 +41,11 @@ elif [[ -e Makefile.PL ]]; then
 
     # same as with minil
     # shellcheck disable=SC2012
-    DIR=$(ls -td -- */ | head -n 1 | cut -d'/' -f1)
+    DIR=$(
+        ls -td -- */ |
+            head -n 1 |
+            cut -d'/' -f1
+    )
     mv "$DIR" "$BUILD_DIR"
 fi
 
