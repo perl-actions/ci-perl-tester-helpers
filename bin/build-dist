@@ -23,12 +23,12 @@ minil-build() (
     # TODO: It looks like minil doesn't accept a build directory name, so we
     # just find the last created dir and use that.
     # shellcheck disable=SC2012
-    DIR=$(
+    dir=$(
         ls -td -- */ |
             head -n 1 |
             cut -d'/' -f1
     )
-    mv "$DIR" "$BUILD_DIR"
+    mv "$dir" "$BUILD_DIR"
 )
 
 build-pl() (
@@ -41,8 +41,8 @@ build-pl() (
 
     # Module::Build does not support a build directory, so we have to find
     # the last created dir and use that.
-    DIR=$(perl -MModule::Build -e 'print Module::Build->resume->dist_dir;')
-    mv "$DIR" "$BUILD_DIR"
+    dir=$(perl -MModule::Build -e 'print Module::Build->resume->dist_dir;')
+    mv "$dir" "$BUILD_DIR"
 )
 
 std-perl-build() (
@@ -55,12 +55,12 @@ std-perl-build() (
 
     # same as with minil
     # shellcheck disable=SC2012
-    DIR=$(
+    dir=$(
         ls -td -- */ |
             head -n 1 |
             cut -d'/' -f1
     )
-    mv "$DIR" "$BUILD_DIR"
+    mv "$dir" "$BUILD_DIR"
 )
 
 main "$@"
