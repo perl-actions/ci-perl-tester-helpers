@@ -1,22 +1,39 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -eux
+set -e -u -o pipefail
 
-BUILD_DIR=${BUILD_DIR:='build_dir'}
+: "${BUILD_DIR:=build_dir}"
 
-if [[ -e dist.ini ]]; then
+main() (
+    if [[ -e dist.ini ]]; then dzil-build
+    elif [[ -e minil.toml ]]; then minil-build
+    elif [[ -e Build.PL ]]; then build-pl
+    elif [[ -e Makefile.PL ]]; then std-perl-build
+    fi
+)
+
+dzil-build() (
     dzil build --no-tgz --in "$BUILD_DIR"
-elif [[ -e minil.toml ]]; then
+)
+
+minil-build() (
     rm -rf "$BUILD_DIR"
     minil build
 
     # TODO: It looks like minil doesn't accept a build directory name, so we
     # just find the last created dir and use that.
     # shellcheck disable=SC2012
-    DIR=$(ls -td -- */ | head -n 1 | cut -d'/' -f1)
-    mv "$DIR" "$BUILD_DIR"
-elif [[ -e Build.PL ]]; then
+    dir=$(
+        ls -td -- */ |
+            head -n 1 |
+            cut -d'/' -f1
+    )
+    mv "$dir" "$BUILD_DIR"
+)
+
+build-pl() (
     rm -rf "$BUILD_DIR"
+
     perl Build.PL
     ./Build clean
     ./Build manifest
@@ -24,21 +41,26 @@ elif [[ -e Build.PL ]]; then
 
     # Module::Build does not support a build directory, so we have to find
     # the last created dir and use that.
-    DIR="$(perl -MModule::Build -e'print Module::Build->resume->dist_dir;')"
-    mv "$DIR" "$BUILD_DIR"
-elif [[ -e Makefile.PL ]]; then
+    dir=$(perl -MModule::Build -e 'print Module::Build->resume->dist_dir;')
+    mv "$dir" "$BUILD_DIR"
+)
+
+std-perl-build() (
     rm -rf "$BUILD_DIR"
     perl Makefile.PL
     make
-    if [[ -e MANIFEST.SKIP ]]; then
+    [[ -e MANIFEST.SKIP ]] &&
         make manifest
-    fi
     make distdir
 
     # same as with minil
     # shellcheck disable=SC2012
-    DIR=$(ls -td -- */ | head -n 1 | cut -d'/' -f1)
-    mv "$DIR" "$BUILD_DIR"
-fi
+    dir=$(
+        ls -td -- */ |
+            head -n 1 |
+            cut -d'/' -f1
+    )
+    mv "$dir" "$BUILD_DIR"
+)
 
-exit 0
+main "$@"

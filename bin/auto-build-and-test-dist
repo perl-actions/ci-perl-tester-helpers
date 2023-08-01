@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -eux
+set -e -u -o pipefail
 
-BUILD_DIR=${BUILD_DIR:='build_dir'}
+: "${BUILD_DIR:=build_dir}"
 
 cpan-install-build-deps
 build-dist
