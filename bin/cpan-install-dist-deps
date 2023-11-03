@@ -3,18 +3,26 @@
 set -e -u -o pipefail
 
 main() (
-    [[ -e cpanfile ]] &&
-        cpm-install "$@"
+    for file in cpanfile Build.PL Makefile.PL; do
+        [[ -e $file ]] || continue
 
-    [[ -e Build.PL ]] &&
-        build-and-install-deps
+        case $file in
+            Build.PL ) build-and-install-deps "$@" ;;
+            cpanfile ) cpm-install --cpanfile $file "$@" ;;
+            Makefile.PL)
+                perl $file
+                cpm-install --metafile MYMETA.json "$@"
+                ;;
+        esac
+
+        break;
+    done
 
     true
 )
 
 cpm-install() (
     cpm install -g \
-        --cpanfile cpanfile \
         --with-recommends \
         --with-suggests \
         --show-build-log-on-failure \
