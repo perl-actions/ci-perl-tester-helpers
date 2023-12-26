@@ -1,0 +1,8 @@
+---
+name: 'Build distribution'
+description: 'Build distribution, automatically detecting how'
+runs:
+  using: "composite"
+  steps:
+    - run: $GITHUB_ACTION_PATH/../bin/build-dist
+      shell: bash

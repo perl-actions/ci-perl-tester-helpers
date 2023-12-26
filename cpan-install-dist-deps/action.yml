@@ -1,0 +1,8 @@
+---
+name: 'Install distribution dependencies from CPAN'
+description: 'Install distribution dependencies from CPAN'
+runs:
+  using: "composite"
+  steps:
+    - run: $GITHUB_ACTION_PATH/../bin/cpan-install-dist-deps
+      shell: bash
