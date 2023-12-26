@@ -55,6 +55,7 @@ job:
     ...
     steps:
 	  ...
+      - uses: perl-actions/ci-perl-tester-helpers/install-test-helper-deps@main
       - uses: perl-actions/ci-perl-tester-helpers/cpan-install-build-deps@main
       - uses: perl-actions/ci-perl-tester-helpers/build-dist@main
       - uses: perl-actions/ci-perl-tester-helpers/cpan-install-dist-deps@main
@@ -62,6 +63,7 @@ job:
         env:
           AUTHOR_TESTING: 1
 ```
+
 ## perl-actions/ci-perl-tester-helpers/build-dist@master
 
 Build your distribution detecting what framework you are using.
@@ -73,6 +75,12 @@ Install build dependencies (eg: dzil modules referenced in your `dist.ini`)
 ## perl-actions/ci-perl-tester-helpers/cpan-install-dist-deps@master
 
 Install dependencies of your distribution.
+
+## perl-actions/ci-perl-tester-helpers/install-helpers-deps@master
+
+Install dependencies required by ci-perl-tester-helpers
+
+- `cpm` - required version min `0.997014`
 
 ## perl-actions/ci-perl-tester-helpers/test-dist@master
 
