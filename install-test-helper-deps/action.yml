@@ -1,0 +1,10 @@
+---
+name: 'Install test helpers dependencies'
+description: 'Install test helpers dependencies'
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      run: |
+        # we need cpm with --metafile support
+        wget https://raw.githubusercontent.com/skaji/cpm/main/cpm > /usr/local/bin/cpm

@@ -1,0 +1,8 @@
+---
+name: 'Test distribution'
+description: 'Test distribution'
+runs:
+  using: "composite"
+  steps:
+    - run: $GITHUB_ACTION_PATH/../bin/test-dist
+      shell: bash

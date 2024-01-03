@@ -45,3 +45,48 @@ curl https://raw.githubusercontent.com/perl-actions/ci-perl-tester-helpers/maste
 # Linting
 
 You can lint this project locally via `precious lint --all`
+
+# Github Actions
+
+Commands are also available as github actions:
+```
+job:
+  linux:
+    ...
+    steps:
+	  ...
+      - uses: perl-actions/ci-perl-tester-helpers/install-test-helper-deps@main
+      - uses: perl-actions/ci-perl-tester-helpers/cpan-install-build-deps@main
+      - uses: perl-actions/ci-perl-tester-helpers/build-dist@main
+      - uses: perl-actions/ci-perl-tester-helpers/cpan-install-dist-deps@main
+      - uses: perl-actions/ci-perl-tester-helpers/test-dist@main
+        env:
+          AUTHOR_TESTING: 1
+```
+
+## perl-actions/ci-perl-tester-helpers/build-dist@master
+
+Build your distribution detecting what framework you are using.
+
+## perl-actions/ci-perl-tester-helpers/cpan-install-build-deps@master
+
+Install build dependencies (eg: dzil modules referenced in your `dist.ini`)
+
+## perl-actions/ci-perl-tester-helpers/cpan-install-dist-deps@master
+
+Install dependencies of your distribution.
+
+## perl-actions/ci-perl-tester-helpers/install-helpers-deps@master
+
+Install dependencies required by ci-perl-tester-helpers
+
+- `cpm` - required version min `0.997014`
+
+## perl-actions/ci-perl-tester-helpers/test-dist@master
+
+Tests your distribution using `prove` with `--state save`.
+
+Recognizes env variables:
+
+- `AUTHOR_TESTING`
+  If set to `1`, includes tests in `xt` directory (if available)

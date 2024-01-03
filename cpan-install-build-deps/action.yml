@@ -1,0 +1,8 @@
+---
+name: 'Install build dependencies from CPAN'
+description: 'Install build dependencies from CPAN'
+runs:
+  using: "composite"
+  steps:
+    - run: $GITHUB_ACTION_PATH/../bin/cpan-install-build-deps
+      shell: bash
