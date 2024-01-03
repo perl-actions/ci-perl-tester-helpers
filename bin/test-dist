@@ -19,9 +19,9 @@ then
     export HARNESS_PERL_SWITCHES
 fi
 
-# remove the changes test if we're testing master
-if [[ $GITHUB_REF == refs/heads/master ||
-      $CIRCLE_BRANCH == master ]]
+# remove the changes test if we're testing main
+if [[ $GITHUB_REF == refs/heads/main ||
+      $CIRCLE_BRANCH == main ]]
 then
     rm -f xt/release/changes_has_content.t || true
     perl -pi -e "s|'xt/release/changes_has_content.t'||g" \
