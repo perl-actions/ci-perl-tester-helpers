@@ -4,21 +4,27 @@
 
 * [Upgrade or Install via curl](#upgrade-or-install-via-curl)
 * [Binaries](#binaries)
-  * [`auto-build-and-test-dist`](#auto-build-and-test-dist)
-  * [`build-dist`](#build-dist)
-  * [`cpan-install-build-deps`](#cpan-install-build-deps)
-  * [`cpan-install-dist-deps`](#cpan-install-dist-deps)
-  * [`test-dist`](#test-dist)
-  * [`upgrade-perl-helpers`](#upgrade-perl-helpers)
+    * [`auto-build-and-test-dist`](#auto-build-and-test-dist)
+    * [`build-dist`](#build-dist)
+    * [`cpan-install-build-deps`](#cpan-install-build-deps)
+    * [`cpan-install-dist-deps`](#cpan-install-dist-deps)
+    * [`test-dist`](#test-dist)
+    * [`upgrade-perl-helpers`](#upgrade-perl-helpers)
 * [Environment Variables](#environment-variables)
 * [Linting](#linting)
+* [Github Actions](#github-actions)
+    * [perl-actions/ci-perl-tester-helpers/build-dist@main](#perl-actionsci-perl-tester-helpersbuild-distmain)
+    * [perl-actions/ci-perl-tester-helpers/cpan-install-build-deps@main](#perl-actionsci-perl-tester-helperscpan-install-build-depsmain)
+    * [perl-actions/ci-perl-tester-helpers/cpan-install-dist-deps@main](#perl-actionsci-perl-tester-helperscpan-install-dist-depsmain)
+    * [perl-actions/ci-perl-tester-helpers/install-helpers-deps@main](#perl-actionsci-perl-tester-helpersinstall-helpers-depsmain)
+    * [perl-actions/ci-perl-tester-helpers/test-dist@main](#perl-actionsci-perl-tester-helperstest-distmain)
 
 <!-- vim-markdown-toc -->
 
 # Upgrade or Install via curl
 
 ```bash
-curl https://raw.githubusercontent.com/perl-actions/ci-perl-tester-helpers/master/bin/upgrade-perl-helpers | bash
+curl https://raw.githubusercontent.com/perl-actions/ci-perl-tester-helpers/main/bin/upgrade-perl-helpers | bash
 ```
 
 # Binaries
@@ -64,25 +70,25 @@ job:
           AUTHOR_TESTING: 1
 ```
 
-## perl-actions/ci-perl-tester-helpers/build-dist@master
+## perl-actions/ci-perl-tester-helpers/build-dist@main
 
 Build your distribution detecting what framework you are using.
 
-## perl-actions/ci-perl-tester-helpers/cpan-install-build-deps@master
+## perl-actions/ci-perl-tester-helpers/cpan-install-build-deps@main
 
 Install build dependencies (eg: dzil modules referenced in your `dist.ini`)
 
-## perl-actions/ci-perl-tester-helpers/cpan-install-dist-deps@master
+## perl-actions/ci-perl-tester-helpers/cpan-install-dist-deps@main
 
 Install dependencies of your distribution.
 
-## perl-actions/ci-perl-tester-helpers/install-helpers-deps@master
+## perl-actions/ci-perl-tester-helpers/install-helpers-deps@main
 
 Install dependencies required by ci-perl-tester-helpers
 
 - `cpm` - required version min `0.997014`
 
-## perl-actions/ci-perl-tester-helpers/test-dist@master
+## perl-actions/ci-perl-tester-helpers/test-dist@main
 
 Tests your distribution using `prove` with `--state save`.
 
