@@ -5,12 +5,40 @@ set -e -u -o pipefail
 : "${BUILD_DIR:=build_dir}"
 
 main() (
-    if [[ -e dist.ini ]]; then dzil-build
-    elif [[ -e minil.toml ]]; then minil-build
+    if   can-run-dzil-build; then dzil-build
+    elif can-run-minil-build; then minil-build
     elif [[ -e Build.PL ]]; then build-pl
     elif [[ -e Makefile.PL ]]; then std-perl-build
     fi
 )
+
+SUCCESS=0
+FAILURE=1
+
+can-run-authoring-tool () {
+	local file="$1"
+	local tool="$2"
+
+	# file doesn't exist ? => don't
+	# is authoring tool available ? => run
+	# does build file exist ? => don't
+	# othwerwise run and fail
+
+	[[ -e "$file"     ]] || return $FAILURE
+	which "$tool"        && return $SUCCESS
+	[[ -e Build.PL    ]] && return $FAILURE
+	[[ -e Makefile.PL ]] && return $FAILURE
+
+	return $SUCCESS
+}
+
+can-run-dzil-build() {
+	can-run-authoring-tool dist.ini dzil
+}
+
+can-run-minil-build() {
+	can-run-authoring-tool minil.toml minil
+}
 
 dzil-build() (
     dzil build --no-tgz --in "$BUILD_DIR"
