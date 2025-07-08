@@ -8,3 +8,4 @@ runs:
       run: |
         # we need cpm with --metafile support
         wget https://raw.githubusercontent.com/skaji/cpm/main/cpm > /usr/local/bin/cpm
+        chmod +x /usr/local/bin/cpm
