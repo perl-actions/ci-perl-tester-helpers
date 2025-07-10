@@ -1,0 +1,13 @@
+---
+name: 'perl -V'
+inputs:
+  artifact:
+    description: 'File name where to save output of command'
+    required: false
+    default: '/dev/null'
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      run: |
+        perl -V | tee "${{ inputs.artifact }}"

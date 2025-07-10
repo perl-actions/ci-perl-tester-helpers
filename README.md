@@ -61,6 +61,7 @@ job:
     ...
     steps:
 	  ...
+      - uses: perl-actions/ci-perl-tester-helpers/report-perl@main
       - uses: perl-actions/ci-perl-tester-helpers/install-test-helper-deps@main
       - uses: perl-actions/ci-perl-tester-helpers/cpan-install-build-deps@main
       - uses: perl-actions/ci-perl-tester-helpers/build-dist@main
@@ -87,6 +88,31 @@ Install dependencies of your distribution.
 Install dependencies required by ci-perl-tester-helpers
 
 - `cpm` - required version min `0.997014`
+
+## perl-actions/ci-perl-tester-helpers/report-perl@main
+
+Report version and configuration of available Perl
+
+Despite being simple `perl -V` (for now) naming it shows intention what
+you want to do.
+
+### Inputs
+
+- `artifact` (optional): When specified, output will be written also to this file.
+
+### Examples
+
+Basic usage:
+```yaml
+- uses: perl-actions/ci-perl-tester-helpers/report-perl@main
+```
+
+Save output to a file:
+```yaml
+- uses: perl-actions/ci-perl-tester-helpers/report-perl@main
+  with:
+    artifact: perl-version.txt
+```
 
 ## perl-actions/ci-perl-tester-helpers/test-dist@main
 
