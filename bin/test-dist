@@ -19,9 +19,13 @@ then
     export HARNESS_PERL_SWITCHES
 fi
 
-# remove the changes test if we're testing main
+# remove the changes test if we're testing the default branch (main or master).
+# Right after a release the version is bumped but Changes has no entry for the
+# new version yet, so this test fails by design on the default branch.
 if [[ $GITHUB_REF == refs/heads/main ||
-      $CIRCLE_BRANCH == main ]]
+      $GITHUB_REF == refs/heads/master ||
+      $CIRCLE_BRANCH == main ||
+      $CIRCLE_BRANCH == master ]]
 then
     rm -f xt/release/changes_has_content.t || true
     perl -pi -e "s|'xt/release/changes_has_content.t'||g" \
