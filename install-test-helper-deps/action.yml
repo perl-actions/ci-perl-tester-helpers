@@ -4,8 +4,5 @@ description: 'Install test helpers dependencies'
 runs:
   using: "composite"
   steps:
-    - shell: bash
-      run: |
-        # we need cpm with --metafile support
-        wget https://raw.githubusercontent.com/skaji/cpm/main/cpm > /usr/local/bin/cpm
-        chmod +x /usr/local/bin/cpm
+    - run:   $GITHUB_ACTION_PATH/../bin/install-test-helper-deps
+      shell: bash

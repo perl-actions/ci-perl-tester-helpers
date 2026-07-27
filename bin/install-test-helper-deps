@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+set -e -u -o pipefail
+
+function main () {
+	ensure-cpanm
+	ensure-cpm
+
+	cpanm --version
+	cpm --version
+	perl -MCarton::Snapshot -e 'print "Carton::Snapshot version $Carton::Snapshot::VERSION\n"'
+}
+
+function download-file () {
+	local destination="$1"
+	local url="$2"
+
+	if command -v curl >/dev/null 2>&1; then
+		download-file-with-curl "$destination" "$url"
+		return 0
+	fi
+
+	if command -v wget >/dev/null 2>&1; then
+		download-file-with-wget "$destination" "$url"
+		return 0
+	fi
+
+	if command -v lwp-request >/dev/null 2>&1; then
+		download-file-with-lwp-request "$destination" "$url"
+		return 0
+	fi
+
+	echo "download-file: none of curl, wget, lwp-request found" >&2
+	return 1
+}
+
+function download-file-with-curl () {
+	local destination="$1"
+	local url="$2"
+
+	curl -fsSL --retry 3 "$url" -o "$destination"
+}
+
+function download-file-with-lwp-request () {
+	local destination="$1"
+	local url="$2"
+	local attempt
+
+	# lwp-request has no built-in retry flag; loop to match curl's --retry 3
+	# (initial attempt + 3 retries = 4 attempts total).
+	# shellcheck disable=SC2034 # spellcheck thinks `attempt` is unused
+	for attempt in 1 2 3 4; do
+		lwp-request -m GET "$url" > "$destination" && return 0
+	done
+
+	return 1
+}
+
+function download-file-with-wget () {
+	local destination="$1"
+	local url="$2"
+
+	# --tries counts total attempts, so 4 matches curl's --retry 3
+	# (initial attempt + 3 retries).
+	wget --tries=4 "$url" -O "$destination"
+}
+
+function ensure-cpanm () {
+	if command -v cpanm >/dev/null 2>&1; then
+		return 0
+	fi
+
+	curl -fsSL https://cpanmin.us | perl - App::cpanminus
+}
+
+function ensure-cpm () {
+	if command -v cpm >/dev/null 2>&1; then
+		return 0
+	fi
+
+	# Merge related changes from docker-perl-tester
+	if perl -e 'exit(($^V ge v5.24.0) ? 0 : 1)'; then
+		download-file /usr/local/bin/cpm https://raw.githubusercontent.com/skaji/cpm/main/cpm
+	else
+		# App::cpm releases after 0.998003 require Perl >= 5.24 and the
+		# 0.998003 CPAN release no longer installs on older Perls, so use
+		# the self-contained (fatpacked) cpm script, which has no CPAN deps.
+		# The commit SHA below is what tag 0.998003 points to, pinned so the
+		# download is immutable; the checksum guards the script we run as root.
+		# Note: only the cpm executable is installed here; App::cpm is not in
+		# site_perl (downstream tooling only invokes the CLI).
+		download-file /usr/local/bin/cpm https://raw.githubusercontent.com/skaji/cpm/1aa61b3c6c8aea2df7a8802206294d268422ccef/cpm
+		echo '6a27e528cf37635773e738db36c4b4ab4345d5a9d00b8cbd2f2dc01abc73177d  /usr/local/bin/cpm' | sha256sum -c -
+	fi
+	chmod +x /usr/local/bin/cpm
+}
+
+# Perl's: main unless caller
+(( ${#BASH_SOURCE[@]} == 1 )) && main "$@"
